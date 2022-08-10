@@ -13,7 +13,7 @@
 
 ## 💻 Sobre o projeto
 
- APi Login de usuarios . 
+ Com essa api o ususario consegue realizar o cadastro e recuperar sua senha , o admin consegue realizar mudanças no cadastro do usuário. 
 
 
 ---
@@ -50,7 +50,7 @@ Além disto é bom ter um editor para trabalhar com o código como [VSCode](http
 ```bash
 
 # Clone este repositório
-$ git clone  https://github.com/Williamluqui/blog-bootstrap-5
+$ git clone  https://github.com/williamluqui/api-login
 
 # Instale o MySql
 
@@ -59,12 +59,16 @@ $ npm install
 
 ```
 
-#### 🧭 Rodando a aplicação web (Frontend)
+#### 🧭 Rodando a API
 
 ```bash
-# Abra o navegador :
+# Abra o Postgree, insominia :
 
 # Digite e Rode na porta escolhida http://localhost:8080/
+
+# GET  http://localhost:8080/user/
+# GET  http://localhost:8080/user/:id(apenas admin)
+# POST http://localhost:8080/user/
 
 
 ```
@@ -72,23 +76,22 @@ $ npm install
 
 As seguintes ferramentas foram usadas na construção do projeto:
 
-+ Bootstrap
+
 + Node Express
 + MySQL
-+ Sequelize
-+ Body-Parser
++ Knex
+
 ## 🔐 Seguranças
 + Middlewares
-+ session
 + Bcript 
 
-> Veja o arquivo  [package.json](https://github.com/Williamluqui/blog-bootstrap-5/blob/main/package.json)
+> Veja o arquivo  [package.json](https://github.com/Williamluqui/api-login/blob/main/package.json)
 
-#### [](https://github.com/Williamluqui/blog-bootstrap-5)**Server**  ([NodeJS](https://nodejs.org/en/)  )
+#### [](https://github.com/williamluqui/api-login)**Server**  ([NodeJS](https://nodejs.org/en/)  )
 
 -   **[Express](https://expressjs.com/)**
 
--   **[Sequelize](https://sequelize.org/)**
+-   **[Knex.js](https://knexjs.org/)**
 
 -   **[dotENV](https://github.com/motdotla/dotenv)**
 
