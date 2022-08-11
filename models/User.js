@@ -1,9 +1,7 @@
 let knex = require("../database/connection");
 let bcrypt = require("bcrypt");
 
-
 class User{
-
 
     async findAll(){
         try {
@@ -28,7 +26,6 @@ class User{
             console.log(error)
             return undefined;
         }
-
     }
 
 
@@ -53,6 +50,37 @@ class User{
             console.log(error);
             return false;
         }
+    }
+    async update(id, email,name,role){
+       let user = await this.findById(id);
+
+        if (user != undefined) {
+            let editUser = {}
+          if (email != user.email) {
+            let result = await this.findEmail(email);
+            if (!result) {
+                editUser.email = email;
+               }else{
+                return {status:false, error: "O email já esta cadastrado."}
+               }
+            }
+        if (name != undefined) {
+            editUser.name = name;
+        }    
+
+        if (role != undefined) {
+            editUser.role = role;
+        }
+        try {
+            await knex.update(editUser).where({id:id}).table("users");
+            return {status:true}
+        } catch (error) {
+            return {status:false, error: error}
+        }
+        }else{
+            return {status:false, error: "O usuário não existe"}
+        }
+
     }
 }
 
