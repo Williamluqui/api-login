@@ -1,5 +1,6 @@
-const { json } = require("express");
-let User = require("../models/User");
+
+const User = require("../models/User");
+const PasswordToken = require("../models/Passwordtoken")
 
 class UserController{
     //TODOS USUARIOS 
@@ -52,7 +53,7 @@ class UserController{
     
   
     } 
-     async edit(req, res){
+    async edit(req, res){
         let {id, role,name, email} = req.body;
         let result = await User.update(id, email,name,role);
         if (result != undefined) {
@@ -65,11 +66,32 @@ class UserController{
             res.status(406).json({message: "Ocorreu um erro no servidor!"})
         }
 
-
-
-     }
+    }
+    async remove(req, res){
+        let {id} = req.params;
+        let result = await User.delete(id);
+        
+        if (result.status) {
+            res.status(200).json({message:"Usuário deletado com Sucesso !"})
+        }else{
+            res.status(406).json({message:result.error});
+        }
 
     }
+     async recoveryPassword(req, res){
+        let {email} = req.body;
+        let result = await PasswordToken.create(email);
+        console.log(result.status)
+        if (result.status){
+            console.log(result.token)
+            res.status(200).send(""+ result.token)
+            
+        } else {
+            res.status(406).send(result.error)
+        }
+
+     }
+}
 
 
 

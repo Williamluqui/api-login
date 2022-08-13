@@ -1,5 +1,5 @@
-let knex = require("../database/connection");
-let bcrypt = require("bcrypt");
+const knex = require("../database/connection");
+const bcrypt = require("bcrypt");
 
 class User{
 
@@ -82,6 +82,34 @@ class User{
         }
 
     }
+    async delete(id){
+       let user = await this.findById(id);
+       if (user != undefined) {
+        try {
+            await knex.delete().where({id:id}).table("users");
+            return {status: true};
+        } catch (error) {
+            return {status:false, error:error};
+        }
+        
+       }else{
+        return {status:false, error: "Usuário não encontrado portanto não pode ser deletado !"}
+       }
+    }
+    async findByEmail(email){
+        try {
+          let result = await knex.select(['id', 'role', 'name', 'email']).where({email:email}).table("users");
+            if (result.length > 0) {
+              return result[0];
+            }else{
+                return undefined;
+            }
+        } catch (error) {
+            console.log(error)
+            return undefined;
+        }
+   
+}
 }
 
 
