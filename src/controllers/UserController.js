@@ -1,7 +1,9 @@
 
 const User = require("../models/User");
-const PasswordToken = require("../models/Passwordtoken")
-
+const PasswordToken = require("../models/Passwordtoken");
+const jwt = require("jsonwebtoken");
+const SECRET = process.env.SECRET
+const bcrypt = require("bcrypt");
 class UserController{
     //TODOS USUARIOS 
     async index(req,res){
@@ -11,11 +13,11 @@ class UserController{
     // FILTRAR USUARIOS 
     async findUser(req,res){
         let {id} = req.params;
-        let user = await User.findById(id)
+        let user = await User.findById(id);
         if (user == undefined) {
-            res.status(404).json({message:"Usuario não encontrado!"})
+            res.status(404).json({message:"Usuario não encontrado!"});
         }else{
-            res.json(user)
+            res.json(user);
         }
     }
 
@@ -46,7 +48,7 @@ class UserController{
         }
 
         await User.new(email.toLowerCase(), password, name);
-        res.status(201).json({message: "User Create"})
+        res.status(201).json({message: "Usuário Criado"})
     } catch (error) {
             console.log(error)
     }
@@ -54,8 +56,8 @@ class UserController{
   
     } 
     async edit(req, res){
-        let {id, role,name, email} = req.body;
-        let result = await User.update(id, email,name,role);
+        let {id, role, name, email} = req.body;
+        let result = await User.update(id, email, name, role);
         if (result != undefined) {
             if (result.status) {
                 res.json({message:"Usuário editado!"} )
@@ -90,6 +92,37 @@ class UserController{
             res.status(406).send(result.error)
         }
 
+     }
+     async changePassword(req, res){
+        let {token,password} = req.body;
+        let isTokenValid = await PasswordToken.validate(token);
+
+        if (isTokenValid.status){
+          await User.changePassword(password,isTokenValid.tokenUser.user_id,isTokenValid.tokenUser.token);
+          res.status(201).json({message:"Usuário Criado"})
+        } else {
+            res.status(406).json({message:"Token Inválido !"})
+        }
+
+
+     }
+     async login(req, res){
+        let {email,password} = req.body;
+        let user = await User.findByEmail(email);
+
+            
+        if (user != undefined) {
+            let result = await  bcrypt.compare(password,user.password);
+            if (result) {
+                var token = jwt.sign({ email: user.email,role:user.role }, SECRET);
+               return res.status(201).json({token})
+            }else{
+                res.status(404).json({message:"Senha incorreta!"})
+            }
+            res.json({status:result});
+    } else {
+            res.json({status:false})
+    }
      }
 }
 

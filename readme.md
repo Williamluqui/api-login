@@ -1,5 +1,5 @@
 <h4 align="center"> 
-	🚧  API 👨‍💻 Em Construção 🚀 🚧
+	🚧  API REST MVC 👨‍💻  🚧
 </h4>
 
 <p align="center">
@@ -13,7 +13,7 @@
 
 ## 💻 Sobre o projeto
 
- Com essa api o ususario consegue realizar o cadastro e recuperar sua senha , o admin consegue realizar mudanças no cadastro do usuário. 
+ Com essa api o usuário consegue realizar cadastro e recuperar sua senha , o admin consegue realizar mudanças no cadastro do usuário e deletar usuários cadastrados. O projeto foi criado no padrão de arquitetura MVC REST, conceitos que estou aprendendo e aplicando nos projetos recentes !
 
 
 ---
@@ -24,7 +24,7 @@
 - [x] O Admin pode deletar um usuário.
 - [x] O Admin pode alterar um usuário.
 - [x] O Usuário pode acessar o site (role 0).
-- [ ] O usuário pode redefinir sua senha .
+- [x] O usuário pode redefinir sua senha .
 
 
 
@@ -81,9 +81,12 @@ As seguintes ferramentas foram usadas na construção do projeto:
 + MySQL
 + Knex
 
+
 ## 🔐 Seguranças
 + Middlewares
 + Bcript 
++ Jwt
+
 
 > Veja o arquivo  [package.json](https://github.com/Williamluqui/api-login/blob/main/package.json)
 

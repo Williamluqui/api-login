@@ -3,9 +3,9 @@ const knex = require('knex')({
     client: 'mysql2',
     connection:{
         host:'localhost',
-        user: 'root',
-        password: '123456',
-        database: 'apiusers'
+        user: process.env.USER,
+        password: process.env.PASSWORD,
+        database:  process.env.DATABASE
     }
 
 });
